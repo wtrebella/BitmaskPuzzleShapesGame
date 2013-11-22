@@ -21,8 +21,14 @@ public enum RotationType {
 }
 
 public enum TileConnectionType {
+	// a mismatch
 	Invalid,
+
+	// the tiles don't directly connect,
+	// but not because of an unmatched edge
 	ValidWithOpenSide,
+
+	// the tiles directly connect
 	ValidWithSolidMatch
 }
 
@@ -98,10 +104,10 @@ public class LineTile : FContainer {
 			throw new FutileException("invalid rotation type");
 		}
 
-		// set up bitmask by adding together the bitmasks of each side that is included in the shape
+		// set up bitmask by doing bitwise OR with each side that is included in the shape
 
 		// so for example, a tile that has all four sides solid (e.g. the cross tile) would be
-		// 1 + 2 + 4 + 8 = 15, which is the same as 0001 + 0010 + 0100 + 1000 = 1111 in binary
+		// 1 | 2 | 4 | 8 = 15, which is the same as 0001 | 0010 | 0100 | 1000 = 1111 in binary
 
 		if (lineTileType == LineTileType.Nub) {
 			if (rotationType == RotationType.Rotation0) 	bitmask = kBitmaskTop;
@@ -111,26 +117,26 @@ public class LineTile : FContainer {
 		}
 
 		if (lineTileType == LineTileType.Line) {
-			if (rotationType == RotationType.Rotation0 || rotationType == RotationType.Rotation180)		bitmask = kBitmaskTop + kBitmaskBottom;
-			if (rotationType == RotationType.Rotation90 || rotationType == RotationType.Rotation270) 	bitmask = kBitmaskRight + kBitmaskLeft;
+			if (rotationType == RotationType.Rotation0 || rotationType == RotationType.Rotation180)		bitmask = kBitmaskTop | kBitmaskBottom;
+			if (rotationType == RotationType.Rotation90 || rotationType == RotationType.Rotation270) 	bitmask = kBitmaskRight | kBitmaskLeft;
 		}
 
 		if (lineTileType == LineTileType.Corner) {
-			if (rotationType == RotationType.Rotation0) 	bitmask = kBitmaskTop + kBitmaskRight;
-			if (rotationType == RotationType.Rotation90) 	bitmask = kBitmaskRight + kBitmaskBottom;
-			if (rotationType == RotationType.Rotation180) 	bitmask = kBitmaskBottom + kBitmaskLeft;
-			if (rotationType == RotationType.Rotation270) 	bitmask = kBitmaskLeft + kBitmaskTop;
+			if (rotationType == RotationType.Rotation0) 	bitmask = kBitmaskTop | kBitmaskRight;
+			if (rotationType == RotationType.Rotation90) 	bitmask = kBitmaskRight | kBitmaskBottom;
+			if (rotationType == RotationType.Rotation180) 	bitmask = kBitmaskBottom | kBitmaskLeft;
+			if (rotationType == RotationType.Rotation270) 	bitmask = kBitmaskLeft | kBitmaskTop;
 		}
 
 		if (lineTileType == LineTileType.Threeway) {
-			if (rotationType == RotationType.Rotation0) 	bitmask = kBitmaskTop + kBitmaskRight + kBitmaskBottom;
-			if (rotationType == RotationType.Rotation90)	bitmask = kBitmaskRight + kBitmaskBottom + kBitmaskLeft;
-			if (rotationType == RotationType.Rotation180)	bitmask = kBitmaskBottom + kBitmaskLeft + kBitmaskTop;
-			if (rotationType == RotationType.Rotation270) 	bitmask = kBitmaskLeft + kBitmaskTop + kBitmaskRight;
+			if (rotationType == RotationType.Rotation0) 	bitmask = kBitmaskTop | kBitmaskRight | kBitmaskBottom;
+			if (rotationType == RotationType.Rotation90)	bitmask = kBitmaskRight | kBitmaskBottom | kBitmaskLeft;
+			if (rotationType == RotationType.Rotation180)	bitmask = kBitmaskBottom | kBitmaskLeft | kBitmaskTop;
+			if (rotationType == RotationType.Rotation270) 	bitmask = kBitmaskLeft | kBitmaskTop | kBitmaskRight;
 		}
 
 		if (lineTileType == LineTileType.Cross) {
-			bitmask = kBitmaskTop + kBitmaskRight + kBitmaskBottom + kBitmaskLeft;
+			bitmask = kBitmaskTop | kBitmaskRight | kBitmaskBottom | kBitmaskLeft;
 		}
 	}
 }
