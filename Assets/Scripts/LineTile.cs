@@ -20,6 +20,17 @@ public enum RotationType {
 	MAX
 }
 
+// this is basically a Vector2 except with ints instead of floats
+public struct TileIndex {
+	public int xIndex;
+	public int yIndex;
+	
+	public TileIndex(int xIndex, int yIndex) {
+		this.xIndex = xIndex;
+		this.yIndex = yIndex;
+	}
+}
+
 public enum TileConnectionType {
 	// a mismatch
 	Invalid,

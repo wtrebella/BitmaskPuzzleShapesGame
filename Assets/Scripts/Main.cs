@@ -73,7 +73,7 @@ public class Main : MonoBehaviour
 		
 		switch (pageType) {
 		case PageType.BitmaskPuzzleShapesGame:
-			pageToCreate = new LineMatcherPage();
+			pageToCreate = new BitmaskPuzzleGame();
 			break;
 		}
 		

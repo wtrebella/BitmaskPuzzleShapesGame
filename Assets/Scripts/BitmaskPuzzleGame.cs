@@ -2,17 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-// this is basically a Vector2 except with ints instead of floats
-public struct TileIndex {
-	public int xIndex;
-	public int yIndex;
-
-	public TileIndex(int xIndex, int yIndex) {
-		this.xIndex = xIndex;
-		this.yIndex = yIndex;
-	}
-}
-
 // when an arrow is pressed, it will contain this data to figure out what to do with the board
 public struct ArrowData {
 	public Direction direction;
@@ -32,7 +21,7 @@ public enum Direction {
 	Left
 }
 
-public class LineMatcherPage : AbstractPage, FMultiTouchableInterface {
+public class BitmaskPuzzleGame : AbstractPage, FMultiTouchableInterface {
 	public LineTile[][] tileMap;										// contains all the map's tiles
 	public List<MatchGroup> matchGroups = new List<MatchGroup>();		// contains all the groups of connected tiles
 
@@ -46,7 +35,7 @@ public class LineMatcherPage : AbstractPage, FMultiTouchableInterface {
 	private int tileMapHeight;											// how many tiles high the board is
 	private FContainer boardContainer;									// just the visual container that holds everything
 
-	public LineMatcherPage () {
+	public BitmaskPuzzleGame () {
 		tileMapWidth = (int)((Futile.screen.width - minBoardMargin) / tileSize);
 		tileMapHeight = (int)((Futile.screen.height - minBoardMargin) / tileSize);
 
